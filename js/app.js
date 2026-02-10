@@ -5,12 +5,32 @@ const create = (html) => document.createElement(html);
 let board; //Spielfeld
 let rows = 4;
 let columns = 4;
-let gameOver = false;
 
 // window.addEventListener("DOMContentLoaded", () => {
 //   createBoard();
 //   renderBoard();
 // });
+
+function showGameOver() {
+  const overlay = create("div");
+  overlay.className = "game-over";
+
+  const text = create("h1");
+  text.innerText = "Game over!";
+
+  const btn = create("button");
+  btn.innerText = "Try again";
+  btn.onclick = restartGame;
+
+  overlay.append(text, btn);
+  el("#board").append(overlay);
+}
+
+function restartGame() {
+  el("#board").innerHTML = "";
+  createBoard();
+  renderBoard();
+}
 
 // initial board
 function createBoard() {
@@ -51,7 +71,11 @@ function addNum() {
       }
     }
   }
-  if (emptyCells.length === 0) return;
+  if (emptyCells.length === 0 && canMove() === false) {
+    showGameOver();
+    return;
+  }
+
   const randomPlace = Math.floor(Math.random() * emptyCells.length);
   const placeToPush = emptyCells[randomPlace];
 
@@ -132,6 +156,21 @@ document.addEventListener("keydown", (e) => {
   addNum();
   renderBoard();
 });
+
+// Game over funktion
+function canMove() {
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < columns; j++) {
+      if (board[i][j] === 0) return true; //leere Plätze -> Bewegung möglich
+      if (
+        (i < rows - 1 && board[i][j] === board[i + 1][j]) || //gleiche Zahlen -> merge möglich
+        (j < columns - 1 && board[i][j] === board[i][j + 1])
+      )
+        return true;
+    }
+  }
+  return false; // sonst ist das Spiel vorbei
+}
 
 function renderBoard() {
   const tile = group(".tile");

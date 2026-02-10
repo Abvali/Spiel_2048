@@ -34,19 +34,6 @@
     background-color 0.15s ease;
 }
 
-.pop {
-  animation: pop 0.15s ease;
-}
-
-@keyframes pop {
-  0% {
-    transform: scale(0.5);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
 .x2 {
   background-color: #eee4da;
   color: #727371;
@@ -110,4 +97,39 @@
 .x8192 {
   background-color: #ff2020;
   color: white;
+}
+#board {
+  position: relative;
+}
+
+/* Game Over */
+.game-over {
+  position: absolute;
+  inset: 0;
+  background: rgba(238, 228, 218, 0.73);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.game-over h1 {
+  font-size: 64px;
+  color: #776e65;
+  margin-bottom: 20px;
+}
+
+.game-over button {
+  background: #8f7a66;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 18px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.game-over button:hover {
+  background: #9f8b77;
 }
