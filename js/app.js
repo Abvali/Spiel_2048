@@ -5,6 +5,7 @@ const create = (html) => document.createElement(html);
 let board; //Spielfeld
 let rows = 4;
 let columns = 4;
+let gameOver = false;
 
 // window.addEventListener("DOMContentLoaded", () => {
 //   createBoard();
@@ -86,8 +87,6 @@ function moveLeft() {
   for (let i = 0; i < rows; i++) {
     board[i] = slideLeft(board[i]);
   }
-  addNum();
-  renderBoard();
 }
 
 //Bevegung nach Rechts (reverse -> slideLeft -> reverse)
@@ -96,30 +95,42 @@ function moveRight() {
     const newBoard = slideLeft([...board[i]].reverse());
     board[i] = newBoard.reverse();
   }
-  addNum();
-  renderBoard();
+}
+
+// um Spalten in Zeilen umzuwandeln (Die Funktion wird zum Bewegung nach Oben und Unten verwendet)
+function transpose() {
+  let newBoard = [[], [], [], []];
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < columns; j++) {
+      newBoard[j][i] = board[i][j];
+    }
+  }
+  board = newBoard;
 }
 
 //Bevegung nach Oben (transpose -> moveLeft -> transpose)
 function moveUp() {
-  console.log("up");
+  transpose();
+  moveLeft();
+  transpose();
 }
 
 //Bevegung nach Rechts (transpose -> moveRight -> transpose)
 function moveDown() {
-  console.log("down");
+  transpose();
+  moveRight();
+  transpose();
 }
+
 // Pfeiltaste Event
 document.addEventListener("keydown", (e) => {
-  if (e.code === "ArrowLeft") {
-    moveLeft();
-  } else if (e.code === "ArrowRight") {
-    moveRight();
-  } else if (e.code === "ArrowUp") {
-    moveUp();
-  } else if (e.code === "ArrowDown") {
-    moveDown();
-  }
+  if (e.code === "ArrowLeft") moveLeft();
+  else if (e.code === "ArrowRight") moveRight();
+  else if (e.code === "ArrowUp") moveUp();
+  else if (e.code === "ArrowDown") moveDown();
+
+  addNum();
+  renderBoard();
 });
 
 function renderBoard() {
