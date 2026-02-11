@@ -54,21 +54,16 @@ function addNum() {
       }
     }
   }
-  // if (emptyCells.length === 0) && canMove() === false) {
-  //   showGameOver();
-  //   return;
-  // }
 
   if (emptyCells.length === 0) {
     if (!canMove()) {
       showGameOver();
     }
-    return; // WICHTIG: immer stoppen, wenn kein Platz frei
+    return; // immer stoppen, wenn kein Platz frei
   }
 
   const randomPlace = Math.floor(Math.random() * emptyCells.length);
   const placeToPush = emptyCells[randomPlace];
-  console.log(placeToPush);
   const twoFour = twoOrFour();
   board[placeToPush.r][placeToPush.c] = twoFour;
 }
@@ -161,6 +156,7 @@ document.addEventListener("keydown", (e) => {
   addNum();
   renderBoard(true); //mit Animation
   updateScore();
+  updateBestScore();
 });
 
 // Game over funktion
@@ -235,16 +231,30 @@ function renderBoard(animate = false) {
 
 function updateScore() {
   el("#score").innerText = score;
+  if (score > 0 && score < 400) {
+    el("#score").classList.add("score-red");
+  } else if (score >= 400 && score < 2048) {
+    el("#score").classList.add("score-yellow");
+  } else if (score > 2048) {
+    el("#score").classList.add("score-green");
+  }
 }
 
+// Bestrecord speichern
 function getBestScore() {
   const saved = localStorage.getItem("bestScore");
   bestScore = saved ? Number(saved) : 0;
   el("#best").innerText = bestScore;
-  console.log(bestScore);
 }
 
-function updateBestScore() {}
+// score mit Bestrecord vergleichen
+function updateBestScore() {
+  if (score > bestScore) {
+    bestScore = score;
+    localStorage.setItem("bestScore", bestScore);
+    el("#best").innerText = bestScore;
+  }
+}
 
 function showGameOver() {
   const overlay = create("div");

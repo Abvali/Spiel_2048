@@ -116,17 +116,16 @@
   text-align: center;
 }
 
-#score {
-  color: red;
+.score-red {
+  color: rgb(236, 63, 63);
 }
 .score-yellow {
-  color: yellow;
+  color: rgb(155, 119, 2);
 }
 .score-green {
-  color: green;
+  color: rgb(5, 107, 5);
 }
 
-/* Game Over */
 .game-over {
   position: absolute;
   inset: 0;
