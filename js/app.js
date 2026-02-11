@@ -8,6 +8,7 @@ let columns = 4;
 let prevBoard;
 let isAnimating = false;
 let score = 0;
+let bestScore = 0;
 
 // window.addEventListener("DOMContentLoaded", () => {
 //   createBoard();
@@ -53,14 +54,21 @@ function addNum() {
       }
     }
   }
-  if (emptyCells.length === 0 && canMove() === false) {
-    showGameOver();
-    return;
+  // if (emptyCells.length === 0) && canMove() === false) {
+  //   showGameOver();
+  //   return;
+  // }
+
+  if (emptyCells.length === 0) {
+    if (!canMove()) {
+      showGameOver();
+    }
+    return; // WICHTIG: immer stoppen, wenn kein Platz frei
   }
 
   const randomPlace = Math.floor(Math.random() * emptyCells.length);
   const placeToPush = emptyCells[randomPlace];
-
+  console.log(placeToPush);
   const twoFour = twoOrFour();
   board[placeToPush.r][placeToPush.c] = twoFour;
 }
@@ -134,6 +142,13 @@ function moveDown() {
 
 // Pfeiltaste Event
 document.addEventListener("keydown", (e) => {
+  if (
+    e.code !== "ArrowLeft" &&
+    e.code !== "ArrowRight" &&
+    e.code !== "ArrowUp" &&
+    e.code !== "ArrowDown"
+  )
+    return;
   if (isAnimating) return;
 
   prevBoard = board.map((row) => [...row]);
@@ -222,6 +237,15 @@ function updateScore() {
   el("#score").innerText = score;
 }
 
+function getBestScore() {
+  const saved = localStorage.getItem("bestScore");
+  bestScore = saved ? Number(saved) : 0;
+  el("#best").innerText = bestScore;
+  console.log(bestScore);
+}
+
+function updateBestScore() {}
+
 function showGameOver() {
   const overlay = create("div");
   overlay.className = "game-over";
@@ -248,4 +272,5 @@ function restartGame() {
 createBoard();
 renderBoard();
 updateScore();
-console.dir(board);
+getBestScore();
+// console.dir(board);

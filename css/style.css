@@ -99,13 +99,31 @@
   color: white;
 }
 
-#score-box {
-  width: 400px;
-  margin: 20px auto;
-  font-size: 24px;
+#info {
+  display: flex;
+}
+#info div {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  margin: 15px;
+  padding: 3px;
+  border-radius: 20px;
+  font-size: 20px;
   font-weight: bold;
   color: #776e65;
+  background-color: #ccc4bc;
   text-align: center;
+}
+
+#score {
+  color: red;
+}
+.score-yellow {
+  color: yellow;
+}
+.score-green {
+  color: green;
 }
 
 /* Game Over */
