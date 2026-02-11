@@ -1,23 +1,42 @@
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+
+  background: linear-gradient(
+    180deg,
+    #6fa0d6 0%,
+    #f4efe6 40%,
+    #f4efe6 60%,
+    #6fa0d6 100%
+  );
+}
+
 #container {
   display: flex;
   flex-direction: column;
-  gap: 25px;
-  justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: #faf8ef;
-  font-family: sans-serif;
+  justify-content: center;
+  gap: 30px;
+  min-height: 100vh;
+}
+
+#info {
+  display: flex;
+  gap: 15px;
 }
 
 #board {
   display: grid;
-  grid-template-columns: repeat(4, 80px);
-  grid-template-rows: repeat(4, 80px);
-  gap: 10px;
-  background: #bbada0;
-  padding: 10px;
-  border-radius: 10px;
-  position: relative;
+  grid-template-columns: repeat(4, 85px);
+  grid-template-rows: repeat(4, 85px);
+  gap: 12px;
+
+  padding: 12px;
+  border-radius: 18px;
+  background: #b9aea3;
+
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
 }
 
 .tile {
@@ -99,21 +118,37 @@
   color: white;
 }
 
-#info {
-  display: flex;
-}
 #info div {
   display: flex;
   flex-direction: column;
-  width: 100px;
-  margin: 15px;
-  padding: 3px;
-  border-radius: 20px;
-  font-size: 20px;
+  align-items: center;
+  justify-content: center;
+
+  width: 120px;
+  padding: 10px 0;
+
+  border-radius: 16px;
+  background: #d6cdc3;
+  color: #6b635c;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#score,
+#best,
+#time-min,
+#time-sec {
+  font-size: 22px;
   font-weight: bold;
-  color: #776e65;
-  background-color: #ccc4bc;
-  text-align: center;
+  margin-top: 4px;
+}
+
+#time-box {
+  flex-direction: row !important;
+  gap: 3px;
 }
 
 .score-red {
@@ -125,12 +160,30 @@
 .score-green {
   color: rgb(5, 107, 5);
 }
-#time-box {
+
+#btn {
   display: flex;
-  flex-direction: column;
-  color: red;
+  gap: 30px;
 }
 
+#btn-newGame,
+#btn-pause {
+  border: none;
+  cursor: pointer;
+  width: 120px;
+  padding: 10px 0;
+  border-radius: 16px;
+  background: #d6cdc3;
+  color: #6b635c;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#btn-newGame:hover,
+#btn-pause:hover {
+  background-color: #ece0ca;
+}
 .game-over {
   position: absolute;
   inset: 0;

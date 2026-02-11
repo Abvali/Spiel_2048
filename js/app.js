@@ -10,7 +10,7 @@ let isAnimating = false;
 let score = 0;
 let bestScore = 0;
 let startTime, timerInterval; // um Zeit zu berechnen
-
+let timerStarted = false;
 // window.addEventListener("DOMContentLoaded", () => {
 //   createBoard();
 //   renderBoard();
@@ -146,9 +146,12 @@ document.addEventListener("keydown", (e) => {
   )
     return;
   if (isAnimating) return;
-
   prevBoard = board.map((row) => [...row]);
 
+  if (!timerStarted) {
+    starTimer();
+    timerStarted = true;
+  }
   if (e.code === "ArrowLeft") moveLeft();
   else if (e.code === "ArrowRight") moveRight();
   else if (e.code === "ArrowUp") moveUp();
@@ -158,6 +161,17 @@ document.addEventListener("keydown", (e) => {
   renderBoard(true); //mit Animation
   updateScore();
   updateBestScore();
+});
+
+// neues Spiel button
+el("#btn-newGame").addEventListener("click", () => {
+  stopTimer();
+  restartGame();
+});
+
+// Spiel pausieren
+el("#btn-pause").addEventListener("click", () => {
+  stopTimer();
 });
 
 // Game over funktion
@@ -273,7 +287,13 @@ function starTimer() {
   }, 1000);
 }
 
+function stopTimer() {
+  clearInterval(timerInterval);
+}
+
 function showGameOver() {
+  stopTimer();
+
   const overlay = create("div");
   overlay.className = "game-over";
 
@@ -292,6 +312,9 @@ function restartGame() {
   score = 0;
   el("#board").innerHTML = "";
   createBoard();
+  el("#time-sec").innerText = "--";
+  el("#time-min").innerText = "--";
+  timerStarted = false;
   renderBoard();
   updateScore();
 }
