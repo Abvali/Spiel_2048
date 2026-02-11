@@ -125,6 +125,11 @@
 .score-green {
   color: rgb(5, 107, 5);
 }
+#time-box {
+  display: flex;
+  flex-direction: column;
+  color: red;
+}
 
 .game-over {
   position: absolute;

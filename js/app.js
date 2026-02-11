@@ -9,6 +9,7 @@ let prevBoard;
 let isAnimating = false;
 let score = 0;
 let bestScore = 0;
+let startTime, timerInterval; // um Zeit zu berechnen
 
 // window.addEventListener("DOMContentLoaded", () => {
 //   createBoard();
@@ -240,20 +241,36 @@ function updateScore() {
   }
 }
 
-// Bestrecord speichern
+// Bestrecord am Anfang des Spieles
 function getBestScore() {
   const saved = localStorage.getItem("bestScore");
   bestScore = saved ? Number(saved) : 0;
   el("#best").innerText = bestScore;
 }
 
-// score mit Bestrecord vergleichen
+// score mit Bestrecord vergleichen und speichern
 function updateBestScore() {
   if (score > bestScore) {
     bestScore = score;
     localStorage.setItem("bestScore", bestScore);
     el("#best").innerText = bestScore;
   }
+}
+
+// die Zeit berechnen
+function starTimer() {
+  startTime = Date.now();
+
+  timerInterval = setInterval(() => {
+    const now = Date.now();
+    const totalTime = Math.floor((now - startTime) / 1000);
+    const minute = Math.floor(totalTime / 60);
+    const second = Math.floor(totalTime % 60);
+    const showSecond = second.toString().padStart(2, "0");
+    const showMinute = minute.toString().padStart(2, "0");
+    el("#time-sec").innerText = showSecond;
+    el("#time-min").innerText = showMinute;
+  }, 1000);
 }
 
 function showGameOver() {
