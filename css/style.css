@@ -34,7 +34,7 @@ body {
 
   padding: 12px;
   border-radius: 18px;
-  background: #b9aea3;
+  background: #9687e1;
 
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
 }
@@ -42,7 +42,7 @@ body {
 .tile {
   width: 80px;
   height: 80px;
-  background: #cdc1b4;
+  background: rgba(232, 239, 20, 0.993);
   border-radius: 6px;
   display: flex;
   justify-content: center;
@@ -54,17 +54,17 @@ body {
 }
 
 .x2 {
-  background-color: #eee4da;
-  color: #727371;
+  background-color: #e85e37;
+  color: #e8eee2;
 }
 
 .x4 {
-  background-color: #ece0ca;
-  color: #727371;
+  background-color: #4087f0;
+  color: #e8eee2;
 }
 
 .x8 {
-  background-color: #f4b17a;
+  background-color: #e95fb6;
   color: white;
 }
 
@@ -147,8 +147,13 @@ body {
 }
 
 #time-box {
+  line-height: 2px;
+}
+#total-Time {
+  display: flex;
   flex-direction: row !important;
-  gap: 3px;
+  border: none;
+  box-shadow: none !important;
 }
 
 .score-red {

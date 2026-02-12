@@ -11,6 +11,8 @@ let score = 0;
 let bestScore = 0;
 let startTime, timerInterval; // um Zeit zu berechnen
 let timerStarted = false;
+let elapsedTime = 0; // um die laufende Zeit zu speichern
+
 // window.addEventListener("DOMContentLoaded", () => {
 //   createBoard();
 //   renderBoard();
@@ -149,7 +151,7 @@ document.addEventListener("keydown", (e) => {
   prevBoard = board.map((row) => [...row]);
 
   if (!timerStarted) {
-    starTimer();
+    startTimer();
     timerStarted = true;
   }
   if (e.code === "ArrowLeft") moveLeft();
@@ -157,7 +159,7 @@ document.addEventListener("keydown", (e) => {
   else if (e.code === "ArrowUp") moveUp();
   else if (e.code === "ArrowDown") moveDown();
 
-  addNum();
+  addNum(); //nach jeder Bewegung, eine neue Zahl hinzufügen
   renderBoard(true); //mit Animation
   updateScore();
   updateBestScore();
@@ -172,6 +174,7 @@ el("#btn-newGame").addEventListener("click", () => {
 // Spiel pausieren
 el("#btn-pause").addEventListener("click", () => {
   stopTimer();
+  el("#btn-pause").innerText = "Play";
 });
 
 // Game over funktion
@@ -244,6 +247,7 @@ function renderBoard(animate = false) {
   }
 }
 
+// nach jedem Merge die neue Punkte zeigen
 function updateScore() {
   el("#score").innerText = score;
   if (score > 0 && score < 400) {
@@ -272,25 +276,41 @@ function updateBestScore() {
 }
 
 // die Zeit berechnen
-function starTimer() {
-  startTime = Date.now();
+function startTimer() {
+  if (elapsedTime === 0) {
+    startTime = Date.now();
+  } else {
+    startTime = Date.now() - elapsedTime;
+  }
+
+  // ohne die Codezeile wird nach jedem StartTime eine neue Timer aufgebaut
+  clearInterval(timerInterval);
 
   timerInterval = setInterval(() => {
     const now = Date.now();
     const totalTime = Math.floor((now - startTime) / 1000);
+
     const minute = Math.floor(totalTime / 60);
     const second = Math.floor(totalTime % 60);
+
     const showSecond = second.toString().padStart(2, "0");
     const showMinute = minute.toString().padStart(2, "0");
+
     el("#time-sec").innerText = showSecond;
     el("#time-min").innerText = showMinute;
   }, 1000);
 }
 
+//extra eine Funktion schreiben, um die Zeitlauf zu stoppen
 function stopTimer() {
   clearInterval(timerInterval);
+
+  elapsedTime = Date.now() - startTime;
+  console.log(elapsedTime);
+  timerStarted = false;
 }
 
+// um GameOver zu zeigen
 function showGameOver() {
   stopTimer();
 
@@ -308,12 +328,14 @@ function showGameOver() {
   el("#board").append(overlay);
 }
 
+// das Spiel neu von Vorne
 function restartGame() {
   score = 0;
+  elapsedTime = 0;
   el("#board").innerHTML = "";
   createBoard();
-  el("#time-sec").innerText = "--";
-  el("#time-min").innerText = "--";
+  el("#time-sec").innerText = "00";
+  el("#time-min").innerText = "00";
   timerStarted = false;
   renderBoard();
   updateScore();
@@ -323,4 +345,3 @@ createBoard();
 renderBoard();
 updateScore();
 getBestScore();
-// console.dir(board);
