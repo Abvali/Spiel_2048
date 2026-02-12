@@ -26,7 +26,27 @@ body {
   gap: 15px;
 }
 
+#info div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 120px;
+  padding: 10px 0;
+
+  border-radius: 26px;
+  background: #d6cdc3;
+  color: #6b635c;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
 #board {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(4, 85px);
   grid-template-rows: repeat(4, 85px);
@@ -118,25 +138,6 @@ body {
   color: white;
 }
 
-#info div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  width: 120px;
-  padding: 10px 0;
-
-  border-radius: 16px;
-  background: #d6cdc3;
-  color: #6b635c;
-
-  font-size: 13px;
-  font-weight: 600;
-
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
 #score,
 #best,
 #time-min,
@@ -189,6 +190,21 @@ body {
 #btn-pause:hover {
   background-color: #ece0ca;
 }
+
+.pause-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(238, 228, 218, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  font-weight: bold;
+  color: #776e65;
+  z-index: 10;
+  border-radius: 8px;
+}
+
 .game-over {
   position: absolute;
   inset: 0;

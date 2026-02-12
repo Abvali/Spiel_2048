@@ -14,11 +14,6 @@ let timerStarted = false;
 let elapsedTime = 0; // um die laufende Zeit zu speichern
 let gameState = "playing";
 
-// window.addEventListener("DOMContentLoaded", () => {
-//   createBoard();
-//   renderBoard();
-// });
-
 // initial board
 function createBoard() {
   board = [
@@ -278,6 +273,9 @@ function updateBestScore() {
 
 // die Zeit berechnen
 function startTimer() {
+  const pauseOverlay = el(".pause-overlay");
+  if (pauseOverlay) pauseOverlay.remove();
+
   if (elapsedTime === 0) {
     startTime = Date.now();
   } else {
@@ -308,10 +306,8 @@ function startTimer() {
 //extra eine Funktion schreiben, um die Zeitlauf zu stoppen
 function stopTimer() {
   clearInterval(timerInterval);
-  gameState = "paused";
-
+  showPauseOverlay();
   elapsedTime = Date.now() - startTime;
-  console.log(elapsedTime);
   timerStarted = false;
 }
 
@@ -326,10 +322,24 @@ function toggleTimer() {
   }
 }
 
+function showPauseOverlay() {
+  //überprüfen ob es die pause Message schon gibt
+  const pauseOverlay = el(".pause-overlay");
+  if (pauseOverlay) return;
+
+  gameState = "paused";
+  const overlay = create("div");
+  overlay.className = "pause-overlay";
+  overlay.innerText = "Pause";
+  el("#board").append(overlay);
+}
+
 // um GameOver zu zeigen
 function showGameOver() {
   gameState = "gameover";
   stopTimer();
+  const pauseOverlay = el(".pause-overlay");
+  if (pauseOverlay) pauseOverlay.remove();
 
   const overlay = create("div");
   overlay.className = "game-over";
