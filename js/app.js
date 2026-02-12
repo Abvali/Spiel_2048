@@ -12,6 +12,7 @@ let bestScore = 0;
 let startTime, timerInterval; // um Zeit zu berechnen
 let timerStarted = false;
 let elapsedTime = 0; // um die laufende Zeit zu speichern
+let gameState = "playing";
 
 // window.addEventListener("DOMContentLoaded", () => {
 //   createBoard();
@@ -147,7 +148,8 @@ document.addEventListener("keydown", (e) => {
     e.code !== "ArrowDown"
   )
     return;
-  if (isAnimating) return;
+  if (gameState !== "playing") return;
+  if (isAnimating) return; // wenn Animation noch nicht fertig ist, dann kein nächster Schritt
   prevBoard = board.map((row) => [...row]);
 
   if (!timerStarted) {
@@ -173,8 +175,7 @@ el("#btn-newGame").addEventListener("click", () => {
 
 // Spiel pausieren
 el("#btn-pause").addEventListener("click", () => {
-  stopTimer();
-  el("#btn-pause").innerText = "Play";
+  toggleTimer();
 });
 
 // Game over funktion
@@ -286,6 +287,9 @@ function startTimer() {
   // ohne die Codezeile wird nach jedem StartTime eine neue Timer aufgebaut
   clearInterval(timerInterval);
 
+  timerStarted = true;
+  gameState = "playing";
+
   timerInterval = setInterval(() => {
     const now = Date.now();
     const totalTime = Math.floor((now - startTime) / 1000);
@@ -304,14 +308,27 @@ function startTimer() {
 //extra eine Funktion schreiben, um die Zeitlauf zu stoppen
 function stopTimer() {
   clearInterval(timerInterval);
+  gameState = "paused";
 
   elapsedTime = Date.now() - startTime;
   console.log(elapsedTime);
   timerStarted = false;
 }
 
+// das Verhalten von Pause/Play button
+function toggleTimer() {
+  if (timerStarted) {
+    stopTimer();
+    el("#btn-pause").innerText = "Resume";
+  } else {
+    startTimer();
+    el("#btn-pause").innerText = "Pause";
+  }
+}
+
 // um GameOver zu zeigen
 function showGameOver() {
+  gameState = "gameover";
   stopTimer();
 
   const overlay = create("div");
@@ -337,6 +354,7 @@ function restartGame() {
   el("#time-sec").innerText = "00";
   el("#time-min").innerText = "00";
   timerStarted = false;
+  gameState = "playing";
   renderBoard();
   updateScore();
 }
