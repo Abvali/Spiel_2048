@@ -246,13 +246,6 @@ function renderBoard(animate = false) {
 // nach jedem Merge die neue Punkte zeigen
 function updateScore() {
   el("#score").innerText = score;
-  if (score > 0 && score < 400) {
-    el("#score").classList.add("score-red");
-  } else if (score >= 400 && score < 2048) {
-    el("#score").classList.add("score-yellow");
-  } else if (score > 2048) {
-    el("#score").classList.add("score-green");
-  }
 }
 
 // Bestrecord am Anfang des Spieles
