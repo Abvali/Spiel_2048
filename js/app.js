@@ -3,16 +3,15 @@ const group = (css) => document.querySelectorAll(css);
 const create = (html) => document.createElement(html);
 
 let board; //Spielfeld
-let rows = 4;
-let columns = 4;
-let prevBoard;
-let isAnimating = false;
+const rows = 4;
+const columns = 4;
+let prevBoard; //für Animation
 let score = 0;
 let bestScore = 0;
 let startTime, timerInterval; // um Zeit zu berechnen
 let timerStarted = false;
 let elapsedTime = 0; // um die laufende Zeit zu speichern
-let gameState = "playing";
+let gameState = "playing"; // der Spielstatus (playing,paused,game over)
 
 // initial board
 function createBoard() {
@@ -58,7 +57,7 @@ function addNum() {
     if (!canMove()) {
       showGameOver();
     }
-    return; // immer stoppen, wenn kein Platz frei
+    return; // immer stoppen, wenn kein Platz frei ist
   }
 
   const randomPlace = Math.floor(Math.random() * emptyCells.length);
@@ -136,6 +135,7 @@ function moveDown() {
 
 // Pfeiltaste Event
 document.addEventListener("keydown", (e) => {
+  // kein Event wenn andere Taste oder nicht gespielt wird
   if (
     e.code !== "ArrowLeft" &&
     e.code !== "ArrowRight" &&
@@ -144,8 +144,13 @@ document.addEventListener("keydown", (e) => {
   )
     return;
   if (gameState !== "playing") return;
-  if (isAnimating) return; // wenn Animation noch nicht fertig ist, dann kein nächster Schritt
+  console.log("BORD");
+  console.dir(board);
+
   prevBoard = board.map((row) => [...row]);
+  console.log("PREV");
+
+  console.dir(prevBoard);
 
   if (!timerStarted) {
     startTimer();
@@ -188,6 +193,7 @@ function canMove() {
   return false; // sonst ist das Spiel vorbei
 }
 
+// Spielfeld (board) aktualisiren
 function renderBoard(animate = false) {
   const tiles = group(".tile");
 
@@ -197,7 +203,7 @@ function renderBoard(animate = false) {
       const tile = tiles[index];
       const value = board[i][j];
 
-      // پاک کردن کلاس‌های قبلی
+      // alle Classe mit "x" am Anfang löschen
       for (let cls of [...tile.classList]) {
         if (cls.startsWith("x")) tile.classList.remove(cls);
       }
@@ -211,21 +217,24 @@ function renderBoard(animate = false) {
       tile.innerText = value;
       tile.classList.add(`x${value}`);
 
-      // ✨ انیمیشن حرکت واقعی
+      // Ab hier ist nur für dir Animation
       if (animate && prevBoard) {
         let fromRow = i;
         let fromCol = j;
 
-        // پیدا کردن جای قبلی همین عدد
+        // alte Position der Zahl suchen
         for (let r = 0; r < rows; r++) {
           for (let c = 0; c < columns; c++) {
+            //Die Zahl war früher dort, aber jetzt nicht mehr
             if (prevBoard[r][c] === value && board[r][c] !== value) {
+              //(fromRow, fromCol) = Startposition der Bewegung
+              // (i, j) = Zielposition
               fromRow = r;
               fromCol = c;
             }
           }
         }
-
+        //Distanz berechnen
         const dx = (fromCol - j) * 100;
         const dy = (fromRow - i) * 100;
 
@@ -234,7 +243,7 @@ function renderBoard(animate = false) {
           tile.style.transform = `translate(${dx}%, ${dy}%)`;
 
           requestAnimationFrame(() => {
-            tile.style.transition = "transform 150ms ease";
+            tile.style.transition = "transform 400ms ease";
             tile.style.transform = "translate(0,0)";
           });
         }
@@ -243,7 +252,7 @@ function renderBoard(animate = false) {
   }
 }
 
-// nach jedem Merge die neue Punkte zeigen
+// nach jedem Merge die neuen Punkte zeigen
 function updateScore() {
   el("#score").innerText = score;
 }
