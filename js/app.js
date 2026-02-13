@@ -144,13 +144,8 @@ document.addEventListener("keydown", (e) => {
   )
     return;
   if (gameState !== "playing") return;
-  console.log("BORD");
-  console.dir(board);
 
   prevBoard = board.map((row) => [...row]);
-  console.log("PREV");
-
-  console.dir(prevBoard);
 
   if (!timerStarted) {
     startTimer();
@@ -173,7 +168,7 @@ el("#btn-newGame").addEventListener("click", () => {
   restartGame();
 });
 
-// Spiel pausieren
+// Spiel pausieren/weitermachen
 el("#btn-pause").addEventListener("click", () => {
   toggleTimer();
 });
