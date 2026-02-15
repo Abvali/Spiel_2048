@@ -11,7 +11,6 @@ Ziel des Spiels ist es, durch Verschieben der Zahlenfelder die Kachel 2048 zu er
 </p>
 
 ## Demo:
-
 Die erste Version dieses Projekts finden Sie hier:[Spiel-2048](https://spiel-2048-jpgkz808h-maryams-projects-98ccfbd2.vercel.app).
 
 ## Funktionen:
