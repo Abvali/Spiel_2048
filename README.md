@@ -6,6 +6,8 @@ Ziel des Spiels ist es, durch Verschieben der Zahlenfelder die Kachel 2048 zu er
 <br>Gleiche Zahlen werden beim Zusammenstoßen addiert. Nach jedem Zug erscheint eine neue Zahl auf dem Spielfeld.
 <br>Das Spiel endet, wenn keine gültigen Züge mehr möglich sind.
 
+![Gameplay](images/gamePlay.gif)
+
 ## Demo:
 
 Die erste Version dieses Projekts finden Sie hier:[Spiel-2048](https://spiel-2048-jpgkz808h-maryams-projects-98ccfbd2.vercel.app).
