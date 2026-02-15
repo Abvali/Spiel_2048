@@ -27,7 +27,7 @@ Die erste Version dieses Projekts finden Sie hier:[Spiel-2048](https://spiel-204
 
 ## Project Setup
 
-- Clone this repository
+- Repository klonen.
 - Projektordner öffnen.
 - index.html im Browser starten.
 Keine Installation oder zusätzliche Pakete erforderlich.
