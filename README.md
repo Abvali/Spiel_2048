@@ -8,7 +8,7 @@ Ziel des Spiels ist es, durch Verschieben der Zahlenfelder die Kachel 2048 zu er
 
 ## Demo:
 
-You can find the first version of that project hier:[Workout-planner](https://workout-planner-beta-two.vercel.app).
+Die erste Version dieses Projekts finden Sie hier.:[Spiel-2048](https://spiel-2048-jpgkz808h-maryams-projects-98ccfbd2.vercel.app).
 
 ## Funktionen:
 
