@@ -6,7 +6,9 @@ Ziel des Spiels ist es, durch Verschieben der Zahlenfelder die Kachel 2048 zu er
 <br>Gleiche Zahlen werden beim Zusammenstoßen addiert. Nach jedem Zug erscheint eine neue Zahl auf dem Spielfeld.
 <br>Das Spiel endet, wenn keine gültigen Züge mehr möglich sind.
 
-![Gameplay](images/gamePlay.gif)
+<p align="center">
+  <img src="assets/gameplay.gif" width="300">
+</p>
 
 ## Demo:
 
